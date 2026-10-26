@@ -15,4 +15,11 @@ for (d in dirs){
     )
 }
 
+# R packages Installation
 
+install.packages(c(
+  "tidyverse", "lubridate", "janitor", "httr2", "jsonlite",
+  "pdftools", "tidymodels", "themis", "ranger", "xgboost",
+  "vip", "urltools", "scales", "patchwork", "gt",
+  "shiny", "renv"
+))
