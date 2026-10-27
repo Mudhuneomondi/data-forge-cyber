@@ -1,0 +1,55 @@
+---
+title: "EDA: CISA KEV"
+author: "Nathan Otieno"
+format: html
+---
+```{r}
+library(tidyverse)
+```
+
+## Load the data
+```{r}
+kev<-
+  read_csv(here::here("data/raw/kev/kev_2026-10-26.csv"))
+```
+
+## 1. Basic Checks
+```{r}
+glimpse(kev)
+```
+
+```{r}
+colSums(is.na(kev))
+```
+No values are missing in the columns used below. Only `cwes` has gaps: 175 of 1756 entries (10%)
+
+```{r}
+summary(kev)
+```
+
+```{r}
+kev |> count(knownRansomwareCampaignUse)
+```
+361 of 1,756 KEV entries (20.6%) are known to have been used in ransomware campaigns. The rest are marked "Unknown", which means no confirmed evidence, not that they were never used.
+
+## Entries added per year
+```{r}
+kev |> count(year = year(dateAdded))
+```
+KEV launched in November 2021 with 311 entries in its first two months, peaked at 555 in 2022, then settled near 190 a year in 2023-24. Additions are rising again: 2026 already has 272 by 23 October, more than all of 2025 (245).
+
+```{r}
+kev |>
+  count(year = year(dateAdded)) |>
+  ggplot(aes(x = year, y = n)) +
+  geom_col() +
+  scale_x_continuous(breaks = 2021:2026) +
+  labs(title = "KEV additions peaked in 2022, dipped and are rising again",
+       subtitle = "2026 is up to 23 October",
+       x = NULL, y = "CVEs added to KEV")
+```
+
+
+
+
+
