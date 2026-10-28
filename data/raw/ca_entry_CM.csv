@@ -17,3 +17,7 @@ fy,quarter,period_start,category_raw,events,reported_total,advisories,source_pag
 2020/21,3,2021-01-01,DDOS/Botnet,2890847,28247819,25506,26,p26 typo: previous period says Dec 2021
 2020/21,3,2021-01-01,Web Application Attacks,3767588,28247819,25506,20,p20 label typo says malware
 2020/21,3,2021-01-01,System vulnerabilities,30203,28247819,25506,13,NA
+2020/21,4,2021-04-01,Malware,23053190,38776699,26536,16,total and advisories on p5
+2020/21,4,2021-04-01,DDOS/Botnet,2564173,38776699,26536,20,total and advisories on p5
+2020/21,4,2021-04-01,Web Application Attacks,11272402,38776699,26536,24,total and advisories on p5
+2020/21,4,2021-04-01,System vulnerabilities,1886934,38776699,26536,14,"total and advisories on p5; p14 prints +6,147.51% vs previous quarter, no cause stated for the size of the rise"
