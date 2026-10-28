@@ -14,3 +14,6 @@ View(log)
 library(pdftools)
 txt <- pdf_text("data/raw/ca_reports/CA_cyber_2025-10.pdf")
 cat(txt[1:3]) # look at the first three pages
+
+kenya_url_data <- read.csv("data/raw/kenya_urls.csv")
+View(kenya_url_data)
