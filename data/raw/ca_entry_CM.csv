@@ -21,3 +21,15 @@ fy,quarter,period_start,category_raw,events,reported_total,advisories,source_pag
 2020/21,4,2021-04-01,DDOS/Botnet,2564173,38776699,26536,20,total and advisories on p5
 2020/21,4,2021-04-01,Web Application Attacks,11272402,38776699,26536,24,total and advisories on p5
 2020/21,4,2021-04-01,System vulnerabilities,1886934,38776699,26536,14,"total and advisories on p5; p14 prints +6,147.51% vs previous quarter, no cause stated for the size of the rise"
+2021/22,1,2021-07-01,Malware,70501144,143040599,73578,10,from FY22 Q3 report trend table; own Q1 report file is wrong
+2021/22,1,2021-07-01,DDOS/Botnet,49816062,143040599,73578,10,same
+2021/22,1,2021-07-01,Web Application Attacks,478123,143040599,73578,10,same
+2021/22,1,2021-07-01,System vulnerabilities,22245270,143040599,73578,10,same
+2021/22,2,2021-10-01,Malware,66765638,129001520,3018545,10,from FY22 Q3 report trend table; own Q2 report file is wrong
+2021/22,2,2021-10-01,DDOS/Botnet,28128957,129001520,3018545,10,same
+2021/22,2,2021-10-01,Web Application Attacks,223720,129001520,3018545,10,same
+2021/22,2,2021-10-01,System vulnerabilities,33883205,129001520,3018545,10,same
+2021/22,3,2022-01-01,Malware,37012510,79175429,2908431,10,NA
+2021/22,3,2022-01-01,DDOS/Botnet,19695287,79175429,2908431,10,NA
+2021/22,3,2022-01-01,Web Application Attacks,324836,79175429,2908431,10,NA
+2021/22,3,2022-01-01,System vulnerabilities,22142796,79175429,2908431,10,NA
