@@ -9,7 +9,11 @@ fy,quarter,period_start,category_raw,events,reported_total,advisories,source_pag
 2019/20,3,2020-01-01,DDOS/Botnet,287481,34644531,NA,4,“botnet attack events”
 2019/20,3,2020-01-01,Web Application Attacks,582281,34644531,NA,4,NA
 2019/20,3,2020-01-01,System vulnerabilities,27091,34644531,NA,4,NA
-2020/21,2,2020-10-01,Malware,46069525,56206097,NA,7,total on p4
-2020/21,2,2020-10-01,DDOS/Botnet,2260036,56206097,NA,10,total on p4; p10 heading BOTNET/DDOS
-2020/21,2,2020-10-01,Web Application Attacks,7847457,56206097,NA,9,total on p4
-2020/21,2,2020-10-01,System vulnerabilities,29079,56206097,NA,6,total on p4
+2020/21,2,2020-10-01,Malware,46069525,56206097,21513,7,total on p4
+2020/21,2,2020-10-01,DDOS/Botnet,2260036,56206097,21513,10,total on p4; p10 heading BOTNET/DDOS
+2020/21,2,2020-10-01,Web Application Attacks,7847457,56206097,21513,9,total on p4
+2020/21,2,2020-10-01,System vulnerabilities,29079,56206097,21513,6,total on p4
+2020/21,3,2021-01-01,Malware,21559181,28247819,25506,16,total and advisories on p10
+2020/21,3,2021-01-01,DDOS/Botnet,2890847,28247819,25506,26,p26 typo: previous period says Dec 2021
+2020/21,3,2021-01-01,Web Application Attacks,3767588,28247819,25506,20,p20 label typo says malware
+2020/21,3,2021-01-01,System vulnerabilities,30203,28247819,25506,13,NA
