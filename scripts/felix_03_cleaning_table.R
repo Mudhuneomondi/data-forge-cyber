@@ -64,8 +64,10 @@ cat("\n── KEV ────────────────────�
 
 kev_files <- list.files("data/raw/kev", pattern = "\\.csv$", full.names = TRUE)
 if (length(kev_files) > 0) {
-  kev <- bind_rows(lapply(kev_files, function(f)
-    read_csv(f, col_types = cols(.default = "c"), show_col_types = FALSE)))
+  kev_files <- last(sort(kev_files))   # newest download only
+  kev <- read_csv(kev_files, col_types = cols(.default = "c"),
+                  show_col_types = FALSE)
+  
   n0k <- nrow(kev)
   cat(sprintf("  Step 0 (raw): %d rows from %d file(s)\n", n0k, length(kev_files)))
   add_row("KEV", "0_raw", n0k, 0,

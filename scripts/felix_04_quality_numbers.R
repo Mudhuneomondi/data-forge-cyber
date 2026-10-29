@@ -114,12 +114,12 @@ if (file.exists(nvd_path)) {
 # 2. KEV – unmatched entries (not in NVD CVSS v3 set) and their CVE-ID years
 # ═══════════════════════════════════════════════════════════════════════════
 cat("\n── 2. KEV ───────────────────────────────────────────────\n")
-kev_files <- list.files("data/raw/kev", pattern = "\\.csv$", full.names = TRUE)
+kev <- list.files("data/raw/kev", full.names = TRUE) |> map_dfr(read_csv)
 
 if (length(kev_files) > 0 && !is.null(nvd_v3_ids)) {
-  kev <- bind_rows(lapply(kev_files, function(f)
-    read_csv(f, col_types = cols(.default = "c"), show_col_types = FALSE)))
-
+  kev <- read_csv(last(sort(kev_files)), col_types = cols(.default = "c"),
+                  show_col_types = FALSE)
+  
   unmatched <- kev |> filter(!cveID %in% nvd_v3_ids)
   n_total   <- nrow(kev)
   n_unmat   <- nrow(unmatched)
@@ -216,17 +216,50 @@ if (file.exists(ca_entry_path)) {
 }
 
 # ═══════════════════════════════════════════════════════════════════════════
-# 4. PENDING datasets
 # ═══════════════════════════════════════════════════════════════════════════
-add("epss_total_rows",      PENDING("EPSS owner"),   "No EPSS data in data/raw/")
-add("phishing_total_rows",  PENDING("PhiUSIIL owner"),"No phishing data in data/raw/")
-add("kenya_urls_total_rows",PENDING("Kenya URL owner"),"No Kenya URL data in data/raw/")
+# 4. EPSS, phishing and Kenyan URLs
+# ═══════════════════════════════════════════════════════════════════════════
+cat("\n── 4. EPSS, phishing, Kenyan URLs ───────────────────────\n")
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Save
-# ═══════════════════════════════════════════════════════════════════════════
-result   <- bind_rows(rows)
-out_path <- file.path(out_dir, "quality_numbers.csv")
-write_csv(result, out_path)
-cat(sprintf("\nSaved %d metrics to %s\n", nrow(result), out_path))
-cat("=======================================================\nDONE\n")
+# EPSS: one row count per file (first line of each file is a comment, so skip it)
+epss_files <- list.files("data/raw/epss", pattern = "\\.csv\\.gz$", full.names = TRUE)
+if (length(epss_files) > 0) {
+  for (f in epss_files) {
+    e <- read_csv(f, skip = 1, show_col_types = FALSE)
+    snap <- sub("^epss_scores-(.*)\\.csv\\.gz$", "\\1", basename(f))
+    add(paste0("epss_rows_", snap), nrow(e), paste("CVEs scored in", basename(f)))
+    add(paste0("epss_missing_scores_", snap), sum(is.na(e$epss)), "Rows with no EPSS value")
+    cat(sprintf("  %s: %d CVEs, %d missing scores\n", basename(f), nrow(e), sum(is.na(e$epss))))
+  }
+} else {
+  add("epss_total_rows", PENDING("Sophie"), "No EPSS files in data/raw/epss/")
+}
+
+# Phishing: the processed table (the raw CSV is not on GitHub)
+phish_path <- "data/processed/phishing.rds"
+if (file.exists(phish_path)) {
+  phish <- readRDS(phish_path)
+  add("phishing_total_rows", nrow(phish), "URLs in data/processed/phishing.rds")
+  add("phishing_n_legitimate", sum(phish$is_phishing == "legitimate"), "Expected 134,850")
+  add("phishing_n_phishing", sum(phish$is_phishing == "phishing"), "Expected 100,945")
+  add("phishing_missing_cells", sum(is.na(phish)), "Empty cells across all columns")
+  cat(sprintf("  Phishing: %d URLs (%d legitimate, %d phishing), %d empty cells\n",
+              nrow(phish), sum(phish$is_phishing == "legitimate"),
+              sum(phish$is_phishing == "phishing"), sum(is.na(phish))))
+} else {
+  add("phishing_total_rows", PENDING("Quintone"), "data/processed/phishing.rds not found")
+}
+
+# Kenyan URL list
+urls_path <- "data/raw/kenya_urls.csv"
+if (file.exists(urls_path)) {
+  urls <- read_csv(urls_path, show_col_types = FALSE)
+  add("kenya_urls_total_rows", nrow(urls), "URLs in data/raw/kenya_urls.csv")
+  add("kenya_urls_organisations", n_distinct(urls$organisation), "Distinct organisations")
+  add("kenya_urls_duplicates", sum(duplicated(urls$url)), "Repeated URLs")
+  add("kenya_urls_not_https", sum(!startsWith(urls$url, "https://")), "URLs not using https")
+  cat(sprintf("  Kenyan URLs: %d links from %d organisations, %d duplicates\n",
+              nrow(urls), n_distinct(urls$organisation), sum(duplicated(urls$url))))
+} else {
+  add("kenya_urls_total_rows", PENDING("Bradley"), "data/raw/kenya_urls.csv not found")
+}
